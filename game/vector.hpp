@@ -42,9 +42,9 @@ namespace game {
 
 			game::Vector operator*(float const &rhs) {
 				game::Vector res(this);
-				res.x += rhs;
-				res.y += rhs;
-				res.z += rhs;
+				res.x *= rhs;
+				res.y *= rhs;
+				res.z *= rhs;
 
 				return res;
 			}
