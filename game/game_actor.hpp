@@ -35,6 +35,7 @@ namespace game {
 				this->transform = MatrixMultiply(this->transform, rotate);
 			}
 
+			void move(const float frame_time);
 			void move();
 			void rotate(const float angle);
 

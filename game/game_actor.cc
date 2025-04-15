@@ -9,8 +9,12 @@
 void game::GameActor::move()
 {
 	float frame_time = GetFrameTime();
-	this->position += this->speed * frame_time;
+	this->move(frame_time);
+}
 
+void game::GameActor::move(const float frame_time)
+{
+	this->position += this->speed * frame_time;
 	this->updateTransform();
 }
 
