@@ -1,6 +1,9 @@
 #include <cmath>
+#include <cstdint>
 #include <cstdio>
+#include <sys/types.h>
 
+#include "game/grid2d.hpp"
 #include "raylib.h"
 #include "raymath.h"
 #include "rlgl.h"
@@ -45,7 +48,7 @@ int main(void)
 
 	game::GameActor player(
 		cubeModel,
-		game::Vector(40, 40, 10),
+		game::Vector(0, 40, 0),
 		game::Vector(10, 10, 10)
 	);
 
@@ -60,26 +63,41 @@ int main(void)
 
 	Material material = LoadMaterialDefault();
 	material.maps[MATERIAL_MAP_DIFFUSE].color = BLUE;
-	Matrix translation = MatrixTranslate(0, 0, 0);
-	Vector3 axis = {
-		.x = (float)GetRandomValue(0, 360),
-		.y = (float)GetRandomValue(0, 360),
-		.z = (float)GetRandomValue(0, 360),
+
+	game::Grid2D grid(game::Vector(-125.0, 0.0f, -125.0));
+
+	Matrix grassTransform[] = {
+		MatrixTranslate(25, 10, 20),
+		MatrixTranslate(0, 10, 25),
 	};
-	axis = Vector3Normalize(axis);
-	float angle = (float)GetRandomValue(0, 180);
-	Matrix rotation = MatrixRotate(axis, angle);
-	Matrix transform = MatrixMultiply(translation, rotation);
+	Mesh cube = GenMeshCube(25, 25, 25);
+	Material material2 = LoadMaterialDefault();
+	material2.maps[MATERIAL_MAP_DIFFUSE].color = RED;
 
 	while(!WindowShouldClose()) {
 		// UpdateCamera(&camera, CAMERA_ORBITAL);
 
 		BeginDrawing();
 
-		ClearBackground(RAYWHITE);
+		ClearBackground(BLACK);
 
 		BeginMode3D(camera);
 			DrawMesh(player.getMesh(), material, player.transform);
+
+			for (uint32_t i = 0; i < GRID2D_WIDTH; i++) {
+				for (uint32_t j = 0; j < GRID2D_HEIGHT; j++) {
+					Matrix translate = grid.getTransform(i, j);
+					Vector3 v = {};
+					v.x = translate.m12;
+					v.y = translate.m13;
+					v.z = translate.m14;
+					DrawModel(grid.getModel(i, j),
+						v, 1.0, WHITE);
+					// DrawMesh(grid.getMesh(i, j),
+					// 		grid.getMaterial(i, j),
+					// 		grid.getTransform(i, j));
+				}
+			}
 		EndMode3D();
 
 		EndDrawing();
