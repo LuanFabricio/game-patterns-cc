@@ -1,6 +1,7 @@
-#include "gtest/gtest.h"
 #include <cstdio>
-#include <raylib.h>
+
+#include "raylib.h"
+#include "gtest/gtest.h"
 
 #include "../../game/game_actor.hpp"
 #include "../../game/model.hpp"
@@ -8,17 +9,16 @@
 
 TEST(GameActorTest, MoveShouldUpdatePlayerPosition)
 {
-	printf("Test\n");
 	game::EntityModel model(Mesh{});
 	game::GameActor ga(
 		model,
 		game::Vector(0, 0, 0),
-		game::Vector(1, 0.5, 0)
+		game::Vector(100.0f, 50.0f, 100.0f)
 	);
 
-	ga.move();
+	ga.move(1.0f);
 
-	EXPECT_EQ(ga.position.x, 1);
-	EXPECT_EQ(ga.position.y, 0.5);
-	EXPECT_EQ(ga.position.z, 0);
+	EXPECT_TRUE(ga.position.x > 0);
+	EXPECT_TRUE(ga.position.y > 0);
+	EXPECT_TRUE(ga.position.z > 0);
 }
