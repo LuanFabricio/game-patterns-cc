@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "../../game/vector.hpp"
+#include "../game/vector.hpp"
 
 TEST(Vector, VectorShouldMultiplyWithAValue)
 {
