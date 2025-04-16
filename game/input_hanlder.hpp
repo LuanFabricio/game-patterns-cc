@@ -1,15 +1,22 @@
 #ifndef __INPUT_HANDER_HPP__
 #define __INPUT_HANDER_HPP__
 
-#include "commander.hpp"
+#include "raylib.h"
+
+#include "command/command.hpp"
+#include "game_actor.hpp"
+
 namespace game {
 	struct InputHandler {
 		private:
-			Command* buttonMove;
-			Command* buttonRotate;
+			Command<GameActor>* buttonMove;
+			Command<GameActor>* buttonRotate;
+			Command<Camera>* buttonZoomIn;
+			Command<Camera>* buttonZoomOut;
 		public:
 			InputHandler();
-			game::Command* handle_input();
+			game::Command<GameActor>* handle_game_actor_input();
+			game::Command<Camera>* handle_camera_input();
 	};
 }
 
