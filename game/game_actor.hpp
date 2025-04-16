@@ -37,6 +37,7 @@ namespace game {
 
 			void move(const float frame_time);
 			void move();
+			void rotate(const float frame_time, const float angle);
 			void rotate(const float angle);
 
 			Mesh getMesh();

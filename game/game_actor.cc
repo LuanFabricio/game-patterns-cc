@@ -18,12 +18,18 @@ void game::GameActor::move(const float frame_time)
 	this->updateTransform();
 }
 
-void game::GameActor::rotate(const float angle)
+void game::GameActor::rotate(const float frame_time, const float angle)
 {
-	float frame_time = GetFrameTime();
 	this->angle += angle * frame_time;
 
 	this->updateTransform();
+}
+
+
+void game::GameActor::rotate(const float angle)
+{
+	const float frame_time = GetFrameTime();
+	this->rotate(frame_time, angle);
 }
 
 void game::GameActor::updateTransform()
