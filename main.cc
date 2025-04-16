@@ -8,7 +8,6 @@
 #include "raymath.h"
 #include "rlgl.h"
 
-#include "game/commander.hpp"
 #include "game/game_actor.hpp"
 #include "game/input_hanlder.hpp"
 #include "game/model.hpp"
@@ -49,7 +48,7 @@ int main(void)
 	game::GameActor player(
 		cubeModel,
 		game::Vector(0, 40, 0),
-		game::Vector(10, 10, 10)
+		game::Vector(100, 0, 100)
 	);
 
 	game::InputHandler input_handler;
@@ -102,9 +101,14 @@ int main(void)
 
 		EndDrawing();
 
-		game::Command* command = input_handler.handle_input();
-		if (command) {
-			command->execute(player);
+		game::Command<game::GameActor>* game_actor_command = input_handler.handle_game_actor_input();
+		if (game_actor_command) {
+			game_actor_command->execute(player);
+		}
+
+		game::Command<Camera>* camera_command = input_handler.handle_camera_input();
+		if (camera_command) {
+			camera_command->execute(camera);
 		}
 	}
 
