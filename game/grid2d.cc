@@ -11,11 +11,19 @@
 
 game::Grid2D::Grid2D(game::Vector offset)
 {
+	Image bricksImage = LoadImage("assets/textures/bricksx64.png");
+	Rectangle rec = {0};
+	rec.width = bricksImage.width;
+	rec.height = bricksImage.height;
+	ImageDrawRectangleLines(&bricksImage, rec, 2, GREEN);
+	Texture bricksTex = LoadTextureFromImage(bricksImage);
+	UnloadImage(bricksImage);
+
 	const float meshSize  = 30;
  	this->grassTerrain = new game::Terrain(
 		game::TerrainModel(
 			GenMeshCube(meshSize, meshSize, meshSize),
-			LoadTexture("assets/textures/bricksx64.png")
+			bricksTex
 		)
 	);
 
