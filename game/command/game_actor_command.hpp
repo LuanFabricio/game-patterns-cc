@@ -4,6 +4,10 @@
 #include "../game_actor.hpp"
 #include "command.hpp"
 
+#define GameActorCommand Command<GameActor>
+
+enum axis_e { AXIS_X, AXIS_Y, AXIS_Z };
+
 namespace game {
 
 	struct GameActorMoveCommand : public Command<GameActor> {
@@ -16,6 +20,17 @@ namespace game {
 		virtual void execute(game::GameActor& game_actor);
 		private:
 			float angle;
+	};
+
+	struct GameActorSetDirectionCommand : public GameActorCommand
+	{
+		GameActorSetDirectionCommand(float value, axis_e axis) :
+			_value(value), _axis(axis) {}
+		virtual void execute(game::GameActor& game_actor);
+
+		private:
+			float _value;
+			axis_e _axis;
 	};
 }
 
