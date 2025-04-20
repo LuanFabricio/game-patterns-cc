@@ -1,6 +1,7 @@
 #ifndef __VECTOR_HPP__
 #define __VECTOR_HPP__
 
+#include <cmath>
 #include <raylib.h>
 
 namespace game {
@@ -56,6 +57,15 @@ namespace game {
 					.y = this->y,
 					.z = this->z,
 				};
+			}
+
+			void normalize()
+			{
+				const float length = std::sqrtf(x*x + y*y + z*z);
+				if (length == 0) return;
+				this->x /= length;
+				this->y /= length;
+				this->z /= length;
 			}
 	};
 };
