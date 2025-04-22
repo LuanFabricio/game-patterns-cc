@@ -14,7 +14,7 @@ void game::GameActor::move()
 
 void game::GameActor::move(const float frame_time)
 {
-	this->position += this->speed * frame_time;
+	this->position += this->direction * this->speed * frame_time;
 	this->updateTransform();
 }
 

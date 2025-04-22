@@ -14,9 +14,11 @@ namespace game {
 			void updateTransform();
 		public:
 			game::Vector position;
-			game::Vector speed;
+			game::Vector direction;
 			game::Vector axis;
 			float angle;
+
+			float speed;
 
 			Matrix transform;
 
@@ -25,11 +27,14 @@ namespace game {
 			GameActor(
 				EntityModel _model,
 				game::Vector _pos,
-				game::Vector _speed,
 				game::Vector _axis = game::Vector(0, 1, 0),
+				game::Vector _direction = game::Vector(0, 0, 0),
+				float _speed = 10.f,
 				float _angle = 0
 			) : position(_pos), speed(_speed),
-				axis(_axis), angle(_angle), model(_model){
+				axis(_axis), angle(_angle),
+				model(_model), direction(_direction)
+			{
 				this->transform = MatrixTranslate(_pos.x, _pos.y,  _pos.z);
 				Matrix rotate = MatrixRotate(_axis.toRayVec3(), angle);
 				this->transform = MatrixMultiply(this->transform, rotate);
