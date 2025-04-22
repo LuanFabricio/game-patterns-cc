@@ -16,11 +16,12 @@ TEST(GameActorTest, MoveShouldUpdatePlayerPosition)
 		game::Vector(100.0f, 50.0f, 100.0f)
 	);
 
+  ga.direction = game::Vector(1.0f, 0.0f, 0.0f);
 	ga.move(1.0f);
 
 	EXPECT_TRUE(ga.position.x > 0);
-	EXPECT_TRUE(ga.position.y > 0);
-	EXPECT_TRUE(ga.position.z > 0);
+	EXPECT_TRUE(ga.position.y == 0);
+	EXPECT_TRUE(ga.position.z == 0);
 }
 
 TEST(GameActorTest, RotateShouldUpdatePlayerAngle)
@@ -29,7 +30,7 @@ TEST(GameActorTest, RotateShouldUpdatePlayerAngle)
 	game::GameActor ga(
 		model,
 		game::Vector(0, 0, 0),
-		game::Vector(100.0f, 50.0f, 100.0f)
+		game::Vector(0.0f, 50.0f, 100.0f)
 	);
 
 	const float old_angle = ga.angle;
