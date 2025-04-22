@@ -15,6 +15,8 @@
 
 #define WINDOW_TITLE "Tower"
 
+#define ARRAY_LEN(x, type) (sizeof(x) / sizeof(type))
+
 struct player_t {
 	Vector2 pos, speed, speed_vector;
 
@@ -45,11 +47,10 @@ int main(void)
 	// player_t player(Vector2{.x=15, .y=15}, Vector2{1, 2});
 	game::EntityModel cubeModel(GenMeshCube(25, 25, 25));
 
-	game::GameActor player(
-		cubeModel,
-		game::Vector(0, 40, 0),
-		game::Vector(100, 0, 100)
-	);
+	// game::GameActor player(
+	// 	cubeModel,
+	// 	game::Vector(0, 40, 0)
+	// );
 
 	game::InputHandler input_handler;
 
@@ -63,7 +64,7 @@ int main(void)
 	Material material = LoadMaterialDefault();
 	material.maps[MATERIAL_MAP_DIFFUSE].color = BLUE;
 
-	game::Grid2D grid(game::Vector(-125.0, 0.0f, -125.0));
+	game::Grid2D grid(game::Vector(-125.0, -25.0f, -125.0));
 
 	Matrix grassTransform[] = {
 		MatrixTranslate(25, 10, 20),
@@ -73,15 +74,33 @@ int main(void)
 	Material material2 = LoadMaterialDefault();
 	material2.maps[MATERIAL_MAP_DIFFUSE].color = RED;
 
+	game::GameActor entities[] = {
+		game::GameActor(
+			cubeModel,
+			game::Vector(0, 0, 0)
+		),
+		game::GameActor(
+			cubeModel,
+			game::Vector(40, 0, 0)
+		),
+	};
+	game::GameActor *player = &entities[0];
+
 	while(!WindowShouldClose()) {
 		// UpdateCamera(&camera, CAMERA_ORBITAL);
+    Ray ray = {
+      .position = (Vector3){ 40.0f, 0.0f, 0.0f},
+      .direction = (Vector3){ 0.0f, -1.0f, 0.0f } //Vector3Normalize(Vector3Subtract(camera.target, camera.position)),
+    };
 
 		BeginDrawing();
 
-		ClearBackground(BLACK);
+    ClearBackground(BLACK);
 
 		BeginMode3D(camera);
-			DrawMesh(player.getMesh(), material, player.transform);
+			for (uint32_t i = 0; i < sizeof(entities) / sizeof(game::GameActor); i++) {
+				DrawMesh(entities[i].getMesh(), material, entities[i].transform);
+			}
 
 			for (uint32_t i = 0; i < GRID2D_WIDTH; i++) {
 				for (uint32_t j = 0; j < GRID2D_HEIGHT; j++) {
@@ -92,25 +111,25 @@ int main(void)
 					v.z = translate.m14;
 					DrawModel(grid.getModel(i, j),
 						v, 1.0, WHITE);
-					// DrawMesh(grid.getMesh(i, j),
-					// 		grid.getMaterial(i, j),
-					// 		grid.getTransform(i, j));
 				}
 			}
+
 		EndMode3D();
 
 		EndDrawing();
 
 		game::Command<game::GameActor>* game_actor_command = input_handler.handle_game_actor_input();
 		if (game_actor_command) {
-			game_actor_command->execute(player);
+			game_actor_command->execute(*player);
 		}
+		input_handler.buttonMove->execute(*player);
 
 		game::Command<Camera>* camera_command = input_handler.handle_camera_input();
 		if (camera_command) {
 			camera_command->execute(camera);
 		}
 	}
+
 
 	return 0;
 }
