@@ -11,60 +11,60 @@
 
 game::Grid2D::Grid2D(game::Vector offset)
 {
-	Image bricksImage = LoadImage("assets/textures/bricksx64.png");
-	Rectangle rec = {0};
-	rec.width = bricksImage.width;
-	rec.height = bricksImage.height;
-	ImageDrawRectangleLines(&bricksImage, rec, 2, GREEN);
-	Texture bricksTex = LoadTextureFromImage(bricksImage);
-	UnloadImage(bricksImage);
+  Image bricksImage = LoadImage("assets/textures/bricksx64.png");
+  Rectangle rec = {0};
+  rec.width = bricksImage.width;
+  rec.height = bricksImage.height;
+  ImageDrawRectangleLines(&bricksImage, rec, 2, GREEN);
+  Texture bricksTex = LoadTextureFromImage(bricksImage);
+  UnloadImage(bricksImage);
 
-	const float meshSize  = 30;
- 	this->grassTerrain = new game::Terrain(
-		game::TerrainModel(
-			GenMeshCube(meshSize, meshSize, meshSize),
-			bricksTex
-		)
-	);
+  const float meshSize  = 30;
+  this->grassTerrain = new game::Terrain(
+      game::TerrainModel(
+        GenMeshCube(meshSize, meshSize, meshSize),
+        bricksTex
+        )
+      );
 
-	for (uint32_t i = 0; i < GRID2D_WIDTH; i++) {
-		for (uint32_t j = 0; j < GRID2D_HEIGHT; j++) {
-			this->grid[i][j] = this->grassTerrain;
-			this->grassTransform.push_back(
-				MatrixTranslate(i*meshSize + offset.x,
-					offset.y,
-					j*meshSize + offset.z));
-		}
-	}
+  for (uint32_t i = 0; i < GRID2D_WIDTH; i++) {
+    for (uint32_t j = 0; j < GRID2D_HEIGHT; j++) {
+      this->grid[i][j] = this->grassTerrain;
+      this->grassTransform.push_back(
+          MatrixTranslate(i*meshSize + offset.x,
+            offset.y,
+            j*meshSize + offset.z));
+    }
+  }
 }
 
 Mesh& game::Grid2D::getMesh(uint32_t i, uint32_t j)
 {
-	return this->grid[i][j]->model.mesh;
+  return this->grid[i][j]->model.mesh;
 }
 
 Material& game::Grid2D::getMaterial(uint32_t i, uint32_t j)
 {
-	return this->grid[i][j]->model.material;
+  return this->grid[i][j]->model.material;
 }
 
 Matrix& game::Grid2D::getTransform(uint32_t i, uint32_t j)
 {
-	return this->grassTransform.at(i * GRID2D_WIDTH + j);
+  return this->grassTransform.at(i * GRID2D_WIDTH + j);
 }
 
 Model& game::Grid2D::getModel(uint32_t i, uint32_t j)
 {
-	return this->grid[i][j]->model.model;
+  return this->grid[i][j]->model.model;
 }
 
 Mesh game::Grid2D::getGrassMesh()
 {
-	return this->grassTerrain->model.mesh;
+  return this->grassTerrain->model.mesh;
 }
 
 Material game::Grid2D::getGrassMaterial()
 {
-	this->grassTerrain->model.material.maps[MATERIAL_MAP_DIFFUSE].color = RED;
-	return this->grassTerrain->model.material;
+  this->grassTerrain->model.material.maps[MATERIAL_MAP_DIFFUSE].color = RED;
+  return this->grassTerrain->model.material;
 }

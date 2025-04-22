@@ -4,11 +4,11 @@
 #include "model.hpp"
 
 namespace game{
-	struct Terrain {
-		game::TerrainModel model;
+  struct Terrain {
+    game::TerrainModel model;
 
-		Terrain(game::TerrainModel _model): model(_model) {}
-	};
+    Terrain(game::TerrainModel _model): model(_model) {}
+  };
 }
 
 #endif //  __TERRAIN_HPP__

@@ -10,28 +10,28 @@ enum axis_e { AXIS_X, AXIS_Y, AXIS_Z };
 
 namespace game {
 
-	struct GameActorMoveCommand : public Command<GameActor> {
-		public:
-			virtual void execute(game::GameActor& game_actor);
-	};
+  struct GameActorMoveCommand : public Command<GameActor> {
+    public:
+      virtual void execute(game::GameActor& game_actor);
+  };
 
-	struct GameActorRotateCommand : public Command<GameActor> {
-		GameActorRotateCommand(float _angle = 16.f) : angle(_angle) {}
-		virtual void execute(game::GameActor& game_actor);
-		private:
-			float angle;
-	};
+  struct GameActorRotateCommand : public Command<GameActor> {
+    GameActorRotateCommand(float _angle = 16.f) : angle(_angle) {}
+    virtual void execute(game::GameActor& game_actor);
+    private:
+    float angle;
+  };
 
-	struct GameActorSetDirectionCommand : public GameActorCommand
-	{
-		GameActorSetDirectionCommand(float value, axis_e axis) :
-			_value(value), _axis(axis) {}
-		virtual void execute(game::GameActor& game_actor);
+  struct GameActorSetDirectionCommand : public GameActorCommand
+  {
+    GameActorSetDirectionCommand(float value, axis_e axis) :
+      _value(value), _axis(axis) {}
+    virtual void execute(game::GameActor& game_actor);
 
-		private:
-			float _value;
-			axis_e _axis;
-	};
+    private:
+    float _value;
+    axis_e _axis;
+  };
 }
 
 #endif // __COMMANDER_GAME_ACTOR_HPP__

@@ -5,23 +5,23 @@
 #include <raylib.h>
 
 namespace game {
-	struct CameraZoomInCommand : public Command<Camera> {
-		public:
-			CameraZoomInCommand(float rate = -1.f) : _rate(rate) {}
-			virtual void execute(Camera& camera);
+  struct CameraZoomInCommand : public Command<Camera> {
+    public:
+      CameraZoomInCommand(float rate = -1.f) : _rate(rate) {}
+      virtual void execute(Camera& camera);
 
-		private:
-			float _rate;
-	};
+    private:
+      float _rate;
+  };
 
-	struct CameraZoomOutCommand : public Command<Camera> {
+  struct CameraZoomOutCommand : public Command<Camera> {
 
-		CameraZoomOutCommand(float rate = 1.0f) : _rate(rate) {}
-		virtual void execute(Camera& camera);
+    CameraZoomOutCommand(float rate = 1.0f) : _rate(rate) {}
+    virtual void execute(Camera& camera);
 
-		private:
-			float _rate;
-	};
+    private:
+    float _rate;
+  };
 }
 
 #endif // __COMMANDER_CAMERA_HPP__
