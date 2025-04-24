@@ -54,14 +54,19 @@ namespace game {
       {
         return (Vector3) {
           .x = this->x,
-            .y = this->y,
-            .z = this->z,
+          .y = this->y,
+          .z = this->z,
         };
+      }
+
+      float length()
+      {
+        return std::sqrtf(x*x + y*y + z*z);
       }
 
       void normalize()
       {
-        const float length = std::sqrtf(x*x + y*y + z*z);
+        const float length = this->length();
         if (length == 0) return;
         this->x /= length;
         this->y /= length;
