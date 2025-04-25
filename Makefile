@@ -7,7 +7,7 @@ GAME_FILES=$(shell find game -type f -iregex ".*\.cc")
 TARGET=build/core.so
 OBJS=$(GAME_FILES:.cc=.o)
 
-TEST_OUT=tests/test.out
+TEST_OUT=build/test.out
 TEST_LINKS=-lgtest
 TEST_DEFS=-Dgtest_disable_pthreads=OFF
 TEST_FILES=$(shell find tests -type f -iregex ".*\.cc")
@@ -28,8 +28,8 @@ $(TARGET): $(OBJS)
 run: all
 	$(OUT)
 
-test:
-	$(CC) $(FLAGS) -o $(TEST_OUT) $(TEST_FILES) $(GAME_FILES) $(LINKS) $(TEST_LINKS) $(TEST_DEFS)
+test: all
+	$(CC) $(FLAGS) -o $(TEST_OUT) $(TEST_FILES) $(TARGET) $(LINKS) $(TEST_LINKS) $(TEST_DEFS)
 
 test-run: test
 	$(TEST_OUT)
