@@ -54,7 +54,7 @@ int main(void)
 
 	game::InputHandler input_handler;
 
-	Camera camera = { 0 };
+	Camera camera = {};
 	camera.position = (Vector3){ -125.0f, 125.0f, -125.0f };
 	camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };
 	camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
@@ -66,11 +66,6 @@ int main(void)
 
 	game::Grid2D grid(game::Vector(-125.0, -25.0f, -125.0));
 
-	Matrix grassTransform[] = {
-		MatrixTranslate(25, 10, 20),
-		MatrixTranslate(0, 10, 25),
-	};
-	Mesh cube = GenMeshCube(25, 25, 25);
 	Material material2 = LoadMaterialDefault();
 	material2.maps[MATERIAL_MAP_DIFFUSE].color = RED;
 
@@ -88,10 +83,10 @@ int main(void)
 
 	while(!WindowShouldClose()) {
 		// UpdateCamera(&camera, CAMERA_ORBITAL);
-    Ray ray = {
-      .position = (Vector3){ 40.0f, 0.0f, 0.0f},
-      .direction = (Vector3){ 0.0f, -1.0f, 0.0f } //Vector3Normalize(Vector3Subtract(camera.target, camera.position)),
-    };
+    // Ray ray = {
+    //   .position = (Vector3){ 40.0f, 0.0f, 0.0f},
+    //   .direction = (Vector3){ 0.0f, -1.0f, 0.0f } //Vector3Normalize(Vector3Subtract(camera.target, camera.position)),
+    // };
 
 		BeginDrawing();
 
