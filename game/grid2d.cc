@@ -12,7 +12,9 @@
 game::Grid2D::Grid2D(game::Vector offset)
 {
   Image bricksImage = LoadImage("assets/textures/bricksx64.png");
-  Rectangle rec = {0};
+  Rectangle rec = {};
+  rec.x = 0;
+  rec.y = 0;
   rec.width = bricksImage.width;
   rec.height = bricksImage.height;
   ImageDrawRectangleLines(&bricksImage, rec, 2, GREEN);

@@ -10,18 +10,13 @@
 namespace game {
 
   struct GameActor {
-    private:
-      void updateTransform();
     public:
       game::Vector position;
       game::Vector direction;
       game::Vector axis;
       float angle;
-
       float speed;
-
       Matrix transform;
-
       EntityModel model;
 
       GameActor(
@@ -31,9 +26,13 @@ namespace game {
           game::Vector _direction = game::Vector(0, 0, 0),
           float _speed = 10.f,
           float _angle = 0
-          ) : position(_pos), speed(_speed),
-      axis(_axis), angle(_angle),
-      model(_model), direction(_direction)
+          )
+        : position(_pos),
+        direction(_direction),
+        axis(_axis),
+        angle(_angle),
+        speed(_speed),
+        model(_model)
     {
       this->transform = MatrixTranslate(_pos.x, _pos.y,  _pos.z);
       Matrix rotate = MatrixRotate(_axis.toRayVec3(), angle);
@@ -46,6 +45,9 @@ namespace game {
       void rotate(const float angle);
 
       Mesh getMesh();
+
+    private:
+      void updateTransform();
   };
 };
 
