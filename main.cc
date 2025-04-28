@@ -83,10 +83,19 @@ int main(void)
 
 	while(!WindowShouldClose()) {
 		// UpdateCamera(&camera, CAMERA_ORBITAL);
-    // Ray ray = {
-    //   .position = (Vector3){ 40.0f, 0.0f, 0.0f},
-    //   .direction = (Vector3){ 0.0f, -1.0f, 0.0f } //Vector3Normalize(Vector3Subtract(camera.target, camera.position)),
-    // };
+    Vector2 mousePosition = GetMousePosition();
+    Ray mouseRay = GetMouseRay(mousePosition, camera);
+
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+      for (uint32_t i = 0; i < ARRAY_LEN(entities, game::GameActor); i++) {
+        game::GameActor *entity = &entities[i];
+        RayCollision rc = GetRayCollisionMesh(mouseRay, entity->getMesh(), entity->transform);
+        if (rc.hit) {
+          player = entity;
+          break;
+        }
+      }
+    }
 
 		BeginDrawing();
 
