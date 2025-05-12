@@ -6,12 +6,6 @@
 #include "game_actor.hpp"
 #include "model.hpp"
 
-void game::GameActor::move()
-{
-  float frame_time = GetFrameTime();
-  this->move(frame_time);
-}
-
 void game::GameActor::move(const float frame_time)
 {
   this->position += this->direction * this->speed * frame_time;

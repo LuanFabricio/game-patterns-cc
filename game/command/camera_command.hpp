@@ -8,7 +8,7 @@ namespace game {
   struct CameraZoomInCommand : public Command<Camera> {
     public:
       CameraZoomInCommand(float rate = -1.f) : _rate(rate) {}
-      virtual void execute(Camera& camera);
+      virtual void execute(Camera& camera, float deltaTime);
 
     private:
       float _rate;
@@ -17,7 +17,7 @@ namespace game {
   struct CameraZoomOutCommand : public Command<Camera> {
 
     CameraZoomOutCommand(float rate = 1.0f) : _rate(rate) {}
-    virtual void execute(Camera& camera);
+    virtual void execute(Camera& camera, float deltaTime);
 
     private:
     float _rate;

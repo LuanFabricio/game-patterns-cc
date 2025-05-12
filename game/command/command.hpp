@@ -5,7 +5,7 @@ namespace game {
   template <typename T> class Command {
     public:
       ~Command() {}
-      virtual void execute(T&) = 0;
+      virtual void execute(T&, float deltaTime) = 0;
   };
 }
 

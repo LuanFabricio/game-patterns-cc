@@ -1,12 +1,18 @@
 #include <cstddef>
 
+#include <cstdio>
 #include <raylib.h>
+#include <vector>
 
+#include "buffer.hpp"
+#include "command/command.hpp"
+#include "game_actor.hpp"
 #include "input_hanlder.hpp"
 #include "command/camera_command.hpp"
 #include "command/game_actor_command.hpp"
 
-game::InputHandler::InputHandler()
+game::InputHandler::InputHandler() :
+  commandBuffer(8)
 {
   this->buttonMove = new GameActorMoveCommand();
   this->buttonRotate = new GameActorRotateCommand(0.5f);
@@ -20,17 +26,19 @@ game::InputHandler::InputHandler()
   this->buttonZoomOut = new CameraZoomOutCommand(5.0f);
 }
 
-game::Command<game::GameActor>* game::InputHandler::handle_game_actor_input()
+game::Buffer<game::Command<game::GameActor>*> game::InputHandler::handle_game_actor_input()
 {
-  if (IsKeyDown(KEY_W)) return this->buttonSetDir11;
-  if (IsKeyDown(KEY_S)) return this->buttonSetDir12;
-  if (IsKeyDown(KEY_D)) return this->buttonSetDir21;
-  if (IsKeyDown(KEY_A)) return this->buttonSetDir22;
+  this->commandBuffer.clear();
 
-  if (IsKeyDown(KEY_SPACE)) return this->buttonMove;
-  if (IsKeyDown(KEY_R)) return this->buttonRotate;
+  if (IsKeyDown(KEY_W)) this->commandBuffer.append(this->buttonSetDir11);
+  if (IsKeyDown(KEY_S)) this->commandBuffer.append(this->buttonSetDir12);
+  if (IsKeyDown(KEY_D)) this->commandBuffer.append(this->buttonSetDir21);
+  if (IsKeyDown(KEY_A)) this->commandBuffer.append(this->buttonSetDir22);
 
-  return NULL;
+  if (IsKeyDown(KEY_SPACE)) this->commandBuffer.append(this->buttonMove);
+  if (IsKeyDown(KEY_R)) this->commandBuffer.append(this->buttonRotate);
+
+  return this->commandBuffer;
 }
 
 
