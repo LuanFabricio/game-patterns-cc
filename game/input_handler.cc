@@ -7,7 +7,7 @@
 #include "buffer.hpp"
 #include "command/command.hpp"
 #include "game_actor.hpp"
-#include "input_hanlder.hpp"
+#include "input_handler.hpp"
 #include "command/camera_command.hpp"
 #include "command/game_actor_command.hpp"
 

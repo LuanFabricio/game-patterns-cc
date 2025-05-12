@@ -3,13 +3,14 @@
 #include <cstdio>
 #include <sys/types.h>
 
+#include "game/buffer.hpp"
 #include "game/grid2d.hpp"
 #include "raylib.h"
 #include "raymath.h"
 #include "rlgl.h"
 
 #include "game/game_actor.hpp"
-#include "game/input_hanlder.hpp"
+#include "game/input_handler.hpp"
 #include "game/model.hpp"
 #include "game/vector.hpp"
 
@@ -122,15 +123,17 @@ int main(void)
 
 		EndDrawing();
 
-		game::Command<game::GameActor>* game_actor_command = input_handler.handle_game_actor_input();
-		if (game_actor_command) {
-			game_actor_command->execute(*player);
-		}
-		input_handler.buttonMove->execute(*player);
+    float deltaTime = GetFrameTime();
+    game::Buffer<game::Command<game::GameActor>*> game_actor_command_buffer = input_handler
+      .handle_game_actor_input();
+    for (uint32_t i = 0; i < game_actor_command_buffer.getSize(); i++){
+			game_actor_command_buffer.buffer[i]->execute(*player, deltaTime);
+    }
+		input_handler.buttonMove->execute(*player, deltaTime);
 
 		game::Command<Camera>* camera_command = input_handler.handle_camera_input();
 		if (camera_command) {
-			camera_command->execute(camera);
+			camera_command->execute(camera, deltaTime);
 		}
 	}
 
