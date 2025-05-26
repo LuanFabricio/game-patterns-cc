@@ -10,16 +10,19 @@ namespace game {
   enum bytecode_comand_e {
     BYTECODE_CMD_STACK = 0,
     BYTECODE_CMD_MOVE,
-    BYTECODE_CMD_SET_DIRECTION,
   };
 
   struct Bytecode {
 
     Bytecode(const uint8_t* byte, const uint32_t byteSize);
     void execute(GameActor &gameActor, float deltaTime);
+    int16_t getStack(uint8_t i);
 
     private:
       static const uint8_t MAX_STACK_SIZE = 255;
+
+      uint8_t stack_[MAX_STACK_SIZE] = {};
+      uint8_t stackCounter_ = 0;
 
       std::vector<GameActorCommand*> commands_;
 
