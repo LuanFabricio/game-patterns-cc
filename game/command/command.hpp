@@ -2,10 +2,10 @@
 #define __COMMANDER_HPP__
 
 namespace game {
-  template <typename T> class Command {
+  template <typename T, typename R=void> class Command {
     public:
       ~Command() {}
-      virtual void execute(T&, float deltaTime) = 0;
+      virtual R execute(T&, float deltaTime) = 0;
   };
 }
 
