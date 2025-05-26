@@ -2,6 +2,7 @@
 #define __VECTOR_HPP__
 
 #include <cmath>
+#include <limits>
 #include <raylib.h>
 
 namespace game {
@@ -48,6 +49,15 @@ namespace game {
         res.z *= rhs;
 
         return res;
+      }
+
+      bool operator==(game::Vector const &rhs)
+      {
+        const float epsilon = std::numeric_limits<float>::epsilon();
+        if (std::abs(this->x - rhs.x) > epsilon) return false;
+        if (std::abs(this->y - rhs.y) > epsilon) return false;
+        if (std::abs(this->z - rhs.z) > epsilon) return false;
+        return true;
       }
 
       Vector3 toRayVec3()
