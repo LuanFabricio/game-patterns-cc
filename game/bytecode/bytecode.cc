@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <cstdio>
 
+#include "../command/bytecode_command.hpp"
 #include "bytecode.hpp"
 
 game::Bytecode::Bytecode(const uint8_t* byte, const uint32_t byteSize)
@@ -18,7 +19,7 @@ game::Bytecode::Bytecode(const uint8_t* byte, const uint32_t byteSize)
         printf("\n");
         break;
       case game::BYTECODE_CMD_MOVE:
-        if (stackCounter_ <= 1) {
+        if (stackCounter_ <= 6) {
           printf("Command without arguments: 0x%x\n", byte[i]);
           break;
         }
@@ -36,9 +37,10 @@ game::Bytecode::Bytecode(const uint8_t* byte, const uint32_t byteSize)
 
 void game::Bytecode::execute(GameActor &gameActor, float deltaTime)
 {
-  for (auto command : commands_) {
-    command->execute(gameActor, deltaTime);
-  }
+  if (commandCounter_ >= commands_.size()) commandCounter_ = 0;
+  auto command = commands_.at(commandCounter_);
+  command->execute(gameActor, deltaTime);
+  commandCounter_ += 1;
 }
 
 int16_t game::Bytecode::getStack(uint8_t i)
@@ -53,12 +55,27 @@ int16_t game::Bytecode::getStack(uint8_t i)
 game::Command<game::GameActor>* game::Bytecode::handle_move(
     uint8_t stack[MAX_STACK_SIZE],  uint8_t &stackCounter)
 {
-  float value = stack[stackCounter-1];
-  axis_e axis = (axis_e)stack[stackCounter-2];
-  stackCounter -= 2;
-  printf("Constructor args: %f, %i\n", value, axis);
+  game::Vector target(
+    stack[stackCounter-1],
+    stack[stackCounter-2],
+    stack[stackCounter-3]
+  );
+  game::Vector direction(
+    stack[stackCounter-4],
+    stack[stackCounter-5],
+    stack[stackCounter-6]
+  );
+  float speed = stack[stackCounter_-7];
+  stackCounter -= 7;
+  printf("Constructor args:\n"
+      "\tTarget: %f, %f, %f\n"
+      "\tDirection: %f, %f, %f\n"
+      "\tSpeed: %f\n",
+      target.x, target.y, target.z,
+      direction.x, direction.y, direction.z,
+      speed);
 
-  game::Command<game::GameActor>* gameActorCommand = new GameActorSetDirectionCommand(
-      value, axis);
+  game::Command<game::GameActor>* gameActorCommand = new BytecodeCommandMoveTo(
+    target, direction, speed);
   return gameActorCommand;
 }

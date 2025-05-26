@@ -14,6 +14,7 @@ namespace game {
 
   struct Bytecode {
 
+    Bytecode(const uint8_t* byte, const uint32_t byteSize, bool loop);
     Bytecode(const uint8_t* byte, const uint32_t byteSize);
     void execute(GameActor &gameActor, float deltaTime);
     int16_t getStack(uint8_t i);
@@ -23,8 +24,10 @@ namespace game {
 
       uint8_t stack_[MAX_STACK_SIZE] = {};
       uint8_t stackCounter_ = 0;
+      bool loop_ = false;
 
       std::vector<GameActorCommand*> commands_;
+      uint8_t commandCounter_ = 0;
 
       game::Command<game::GameActor>* handle_move(
           uint8_t stack[MAX_STACK_SIZE],  uint8_t &stackCounter);
