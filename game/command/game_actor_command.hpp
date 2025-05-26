@@ -1,12 +1,11 @@
 #ifndef __COMMANDER_GAME_ACTOR_HPP__
 #define __COMMANDER_GAME_ACTOR_HPP__
 
-#include "../game_actor.hpp"
 #include "command.hpp"
+#include "../game_actor.hpp"
+#include "../utils.hpp"
 
 #define GameActorCommand Command<GameActor>
-
-enum axis_e { AXIS_X=0, AXIS_Y, AXIS_Z };
 
 namespace game {
 
