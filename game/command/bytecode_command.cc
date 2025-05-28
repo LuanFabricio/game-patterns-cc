@@ -33,7 +33,6 @@ void game::BytecodeCommandMoveTo::execute(game::GameActor& gameActor, float delt
       gameActor.position.x, gameActor.position.y, gameActor.position.z);
   printf("Speed: %f\n", gameActor.speed);
 
-  Vector oldDirection =  gameActor.direction;
   gameActor.direction = direction_;
   printf("%f, %f, %f\n",
       gameActor.direction.x, gameActor.direction.y, gameActor.direction.z);
