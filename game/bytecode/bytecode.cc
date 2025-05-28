@@ -35,6 +35,21 @@ game::Bytecode::Bytecode(const uint8_t* byte, const uint32_t byteSize)
   printf("Amount of commands: %lu\n", commands_.size());
 }
 
+game::Bytecode game::Bytecode::fromFile(const char* filename)
+{
+  FILE *file = fopen(filename, "rb");
+  fseek(file, 0L, SEEK_END);
+  uint32_t byteSize = ftell(file);
+  uint8_t *byte = (uint8_t*)malloc(sizeof(uint8_t) * byteSize);
+  fseek(file, 0L, SEEK_SET);
+
+  fread(byte, sizeof(uint8_t), byteSize, file);
+
+  fclose(file);
+
+  return game::Bytecode(byte, byteSize);
+}
+
 void game::Bytecode::execute(GameActor &gameActor, float deltaTime)
 {
   if (commandCounter_ >= commands_.size()) commandCounter_ = 0;

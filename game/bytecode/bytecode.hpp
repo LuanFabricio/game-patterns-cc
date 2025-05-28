@@ -14,8 +14,10 @@ namespace game {
 
   struct Bytecode {
 
-    Bytecode(const uint8_t* byte, const uint32_t byteSize, bool loop);
     Bytecode(const uint8_t* byte, const uint32_t byteSize);
+
+    static Bytecode fromFile(const char* filename);
+
     void execute(GameActor &gameActor, float deltaTime);
     int16_t getStack(uint8_t i);
 
