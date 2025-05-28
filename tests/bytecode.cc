@@ -5,19 +5,20 @@
 
 TEST(Bytecode, CMD_MOVE)
 {
-  const uint8_t bytecodeArr[] = {
-    game::BYTECODE_CMD_STACK, 0xA, // Speed
-    game::BYTECODE_CMD_STACK, 0x1, // Direction Z
-    game::BYTECODE_CMD_STACK, 0x1, // Direction Y
-    game::BYTECODE_CMD_STACK, 0x1, // Direction X
-    game::BYTECODE_CMD_STACK, 0xF, // Target Z
-    game::BYTECODE_CMD_STACK, 0xA, // Target Y
-    game::BYTECODE_CMD_STACK, 0x0, // Target X
-    game::BYTECODE_CMD_MOVE,
-    0x12
-  };
+  game::Bytecode behavior = game::Bytecode::fromFile("assets/bytecode/demo.bin");
+  // const uint8_t bytecodeArr[] = {
+  //   game::BYTECODE_CMD_STACK, 0xA, // Speed
+  //   game::BYTECODE_CMD_STACK, 0x1, // Direction Z
+  //   game::BYTECODE_CMD_STACK, 0x1, // Direction Y
+  //   game::BYTECODE_CMD_STACK, 0x1, // Direction X
+  //   game::BYTECODE_CMD_STACK, 0xF, // Target Z
+  //   game::BYTECODE_CMD_STACK, 0xA, // Target Y
+  //   game::BYTECODE_CMD_STACK, 0x0, // Target X
+  //   game::BYTECODE_CMD_MOVE,
+  //   0x12
+  // };
 
-  game::Bytecode behavior(bytecodeArr, sizeof(bytecodeArr));
+  // game::Bytecode behavior(bytecodeArr, sizeof(bytecodeArr));
 
   game::EntityModel model(Mesh{});
   game::GameActor gameActor(model, game::Vector(0, 0, 0));
