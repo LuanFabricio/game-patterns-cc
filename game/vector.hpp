@@ -34,6 +34,16 @@ namespace game {
         return *this;
       }
 
+      game::Vector operator+(Vector const &rhs)
+      {
+        game::Vector res(this);
+        res.x += rhs.x;
+        res.y += rhs.y;
+        res.z += rhs.z;
+
+        return res;
+      }
+
       game::Vector &operator*=(float const &rhs) {
         this->x *= rhs;
         this->y *= rhs;
