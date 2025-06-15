@@ -2,7 +2,6 @@
 
 #include <cstdio>
 #include <raylib.h>
-#include <vector>
 
 #include "buffer.hpp"
 #include "command/command.hpp"
