@@ -1,5 +1,3 @@
-#include <cstdio>
-
 #include <raylib.h>
 #include <raymath.h>
 

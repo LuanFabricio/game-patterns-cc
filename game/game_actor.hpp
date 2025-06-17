@@ -6,6 +6,7 @@
 
 #include "model.hpp"
 #include "vector.hpp"
+#include "physics/hitbox.hpp"
 
 namespace game {
 
@@ -14,6 +15,7 @@ namespace game {
       game::Vector position;
       game::Vector direction;
       game::Vector axis;
+      game::Hitbox hb;
       float angle;
       float speed;
       Matrix transform;
@@ -22,12 +24,14 @@ namespace game {
       GameActor(
           EntityModel _model,
           game::Vector _pos,
+          game::Hitbox _hb,
           game::Vector _axis = game::Vector(0, 1, 0),
           game::Vector _direction = game::Vector(0, 0, 0),
           float _speed = 10.f,
           float _angle = 0
           )
         : position(_pos),
+        hb(_hb),
         direction(_direction),
         axis(_axis),
         angle(_angle),
