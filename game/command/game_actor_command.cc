@@ -7,6 +7,7 @@ namespace game {
     game_actor.direction.x = 0;
     game_actor.direction.y = 0;
     game_actor.direction.z = 0;
+    game_actor.hb.position = game_actor.position;
   }
 
   void GameActorRotateCommand::execute(game::GameActor& game_actor, float deltaTime)

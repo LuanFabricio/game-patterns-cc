@@ -12,6 +12,7 @@
 #include "game/game_actor.hpp"
 #include "game/input_handler.hpp"
 #include "game/model.hpp"
+#include "game/physics/hitbox.hpp"
 #include "game/vector.hpp"
 
 #define WINDOW_TITLE "Tower"
@@ -73,13 +74,22 @@ int main(void)
 	game::GameActor entities[] = {
 		game::GameActor(
 			cubeModel,
-			game::Vector(0, 0, 0)
+			game::Vector(0, 0, 0),
+      game::Hitbox(
+        game::Vector(0, 0, 0),
+        game::Vector(25, 25, 25)
+      )
 		),
 		game::GameActor(
 			cubeModel,
-			game::Vector(40, 0, 0)
+			game::Vector(40, 0, 0),
+      game::Hitbox(
+        game::Vector(40, 0, 0),
+        game::Vector(25, 25, 25)
+      )
 		),
 	};
+  const uint32_t sizeofEntities = sizeof(entities) / sizeof(game::GameActor);
 	game::GameActor *player = &entities[0];
 
 	while(!WindowShouldClose()) {
@@ -130,6 +140,15 @@ int main(void)
 			game_actor_command_buffer.buffer[i]->execute(*player, deltaTime);
     }
 		input_handler.buttonMove->execute(*player, deltaTime);
+
+    for (uint32_t i = 0; i < sizeofEntities; i++) {
+      game::GameActor *entity_ptr = &(entities[i]);
+      printf("[%i]Testing %p with %p (%b)\n", i, player, entity_ptr, player == entity_ptr);
+      if (player == entity_ptr) continue;
+      if (player->hb.testWith(entity_ptr->hb)) {
+        printf("[%i]Collides: %p with %p\n", i, player, &(entities[i]));
+      }
+    }
 
 		game::Command<Camera>* camera_command = input_handler.handle_camera_input();
 		if (camera_command) {
